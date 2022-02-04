@@ -3,9 +3,7 @@ import * as Realm from "realm-web";
 
 function Card({ movie }) {
     const app = new Realm.App("crud-panel-backend-ytuar")
-    const mongodb = await app.currentUser.mongoClient('mongodb-atlas')
-    const tasksCollection = mongodb.db('crud-panel').collection('dummy-user')
-
+    
     const buttonCall = async (event) => {
         event.preventDefault();
         const data = {
@@ -13,6 +11,8 @@ function Card({ movie }) {
             movieID: event.target.id,
             userID: "9"
         }
+        const mongodb = await app.currentUser.mongoClient('mongodb-atlas')
+        const tasksCollection = mongodb.db('crud-panel').collection('dummy-user')
         const insertResult = await tasksCollection.insertOne(data)
         if (insertResult) {
             const getItems = await tasksCollection.find({})
