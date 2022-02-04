@@ -3,7 +3,7 @@ import * as Realm from "realm-web";
 
 function Card({ movie }) {
     const app = new Realm.App("crud-panel-backend-ytuar")
-    const mongodb = app.currentUser.mongoClient('mongodb-atlas')
+    const mongodb = await app.currentUser.mongoClient('mongodb-atlas')
     const tasksCollection = mongodb.db('crud-panel').collection('dummy-user')
 
     const buttonCall = async (event) => {
