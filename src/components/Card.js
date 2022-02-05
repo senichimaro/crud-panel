@@ -2,8 +2,8 @@ import axios from 'axios'
 import * as Realm from "realm-web";
 
 function Card({ movie }) {
-    const app = new Realm.App("crud-panel-backend-ytuar")
     
+
     const buttonCall = async (event) => {
         event.preventDefault();
         const data = {
@@ -11,8 +11,12 @@ function Card({ movie }) {
             movieID: event.target.id,
             userID: "9"
         }
+        const app = await new Realm.App({ id: "crud-panel-backend-ytuar" });
+        const credentials = await Realm.Credentials.anonymous();
+
+        const user = await app.logIn(credentials);
         const mongodb = await app.currentUser.mongoClient('mongodb-atlas')
-        const tasksCollection = mongodb.db('crud-panel').collection('dummy-user')
+        const tasksCollection = await mongodb.db('crud-panel').collection('dummy-user')
         const insertResult = await tasksCollection.insertOne(data)
         if (insertResult) {
             const getItems = await tasksCollection.find({})
