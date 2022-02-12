@@ -2,15 +2,15 @@
 function CompHandler({
     items,
     resourceName,
-    compItem: ComponentItem
+    compItem:  CompHand
 }) {
     return (
         <>
             {items.map((item, i) => (
-                <ComponentItem {...{ [resourceName]: item }} key={i} />
-            ))}
+                    <CompHand {...{ [resourceName]: item }} key={i} />
+                ))
+            }
         </>
     )
-
 }
-export default CompHandler
+export default CompHandler;
