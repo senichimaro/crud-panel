@@ -5,13 +5,8 @@ export const DataLoader = ({ getF = ()=>{}, resourceName, children }) => {
 
     useEffect(() => {
         (async () => {
-            try {
-                const response = await getF()
-                if (response.status == 200) setState(response.data.results)
-            }
-            catch(e){
-                console.log('error at DataLoader.js')
-            }
+            const response = await getF()
+            setState(response)
         })()
     }, [getF])
 
