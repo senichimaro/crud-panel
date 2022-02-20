@@ -10,10 +10,8 @@ import logo from '../logo.svg';
 import './Table.css';
 
 export const Table = ({movies, isAuthenticated}) => {
-    console.log("isAuthenticated", isAuthenticated)
     return (
         <div className="Table">
-            <Navigation />
             <header className="Table-header">
                 {
                     Object.keys(movies).length

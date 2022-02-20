@@ -1,27 +1,21 @@
-import axios from 'axios'
-import * as Realm from "realm-web";
+import { useAuth0 } from '@auth0/auth0-react'
+import { dbconn } from '../services/services'
+import { useSelector } from 'react-redux'
+import { getCurrentUserID } from '../redux/reducers'
 
 function Card({ movie }) {
+    const { isAuthenticated } = useAuth0();
+    const userID = useSelector( getCurrentUserID )
     
-
     const buttonCall = async (event) => {
         event.preventDefault();
         const data = {
             media_type: event.target.value,
             movieID: event.target.id,
-            userID: "9"
+            userID: userID
         }
-        const app = await new Realm.App({ id: "crud-panel-backend-ytuar" });
-        const credentials = await Realm.Credentials.anonymous();
-
-        const user = await app.logIn(credentials);
-        const mongodb = await app.currentUser.mongoClient('mongodb-atlas')
-        const tasksCollection = await mongodb.db('crud-panel').collection('dummy-user')
-        const insertResult = await tasksCollection.insertOne(data)
-        if (insertResult) {
-            const getItems = await tasksCollection.find({})
-            console.log("getItems", getItems)
-        }
+        const tasksCollection = await dbconn()
+        await tasksCollection.insertOne(data)
     }
 
     return (
@@ -30,7 +24,11 @@ function Card({ movie }) {
             <div className="card-body">
                 <h5 className="card-title">{movie.original_title}</h5>
                 <p className="card-text">{`${movie.overview.substring(0, 65)}...`}</p>
-                <button onClick={buttonCall} id={movie.id} value={movie.media_type} className="btn btn-primary">Save</button>
+                {
+                    isAuthenticated
+                    ? <button onClick={buttonCall} id={movie.id} value={movie.media_type} className="btn btn-primary">Save</button>
+                    : null
+                }
             </div>
         </div>
     )
