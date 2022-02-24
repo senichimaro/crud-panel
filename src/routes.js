@@ -2,10 +2,12 @@
 export const routes = [
     {
         name: "Home",
-        path: "/"
+        path: "/",
+        private: false
     },
     {
         name: "Private",
-        path: "/private"
+        path: "/private",
+        private: true
     }
 ]

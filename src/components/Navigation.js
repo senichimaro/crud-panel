@@ -13,11 +13,14 @@ function Navigation({ isAuthenticated }) {
             </li>
             {
                 routes.map((item, i) => {
-                    return (
-                        <li className="nav-item" key={i}>
-                            <a className="nav-link" href={item.path}>{item.name}</a>
-                        </li>
-                    )
+                    if ( !(item.private) || (item.private && isAuthenticated) ){
+                        return (
+                            <li className="nav-item" key={i}>
+                                <a className="nav-link" href={item.path}>{item.name}</a>
+                            </li>
+                        )
+                    }
+                    else return null
                 })
             }
             <li className="d-flex">
