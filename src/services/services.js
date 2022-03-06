@@ -1,14 +1,25 @@
 import axios from 'axios'
 import * as Realm from "realm-web";
-// import { useAuth0 } from '@auth0/auth0-react'
 import { useDispatch } from 'react-redux'
 import { setCurrentUserID } from '../redux/reducers'
-// import { useSelector } from 'react-redux'
-// import { getCurrentUserID } from '../redux/reducers'
+
+export const buildMoviesArr = async (database) => {
+    console.log("database", database)
+    let movies = []
+    database.forEach(async (item, index) => {
+        console.log("item", item)
+        // const response = await axios(`https://api.themoviedb.org/3/movie/${item.movieID}${process.env.REACT_APP_TMDB}&language=en-US`)
+        // movies.push(response.data)
+
+    })
+    return movies
+}
 
 export const useUserID = async ( user ) => {
-    const userID = await regexUserID(user.sub)
     const dispatch = useDispatch()
+    let userID = false
+    if( user ) userID = await regexUserID(user.sub)
+    else userID = await regexUserID("000|000")
     dispatch(setCurrentUserID(userID))
     return userID
 }
@@ -24,11 +35,6 @@ export const dbconn = async () => {
     const user = await app.logIn(credentials);
     const mongodb = await app.currentUser.mongoClient(process.env.REACT_APP_MONGO_CLIENT)
     const tasksCollection = await mongodb.db(process.env.REACT_APP_MONGO_DB).collection(process.env.REACT_APP_MONGO_COLLECTION)
-    // const insertResult = await tasksCollection.insertOne(data)
-    // if (insertResult) {
-    //     const getItems = await tasksCollection.find({})
-    //     console.log("getItems", getItems)
-    // }
     return tasksCollection
 }
 

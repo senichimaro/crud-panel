@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 // components
 import Navigation from '../components/Navigation';
@@ -6,7 +6,6 @@ import Spinner from '../components/Spinner';
 import CompHandler from '../components/CompHandler'
 import Card from '../components/Card'
 
-import logo from '../logo.svg';
 import './Table.css';
 
 export const Table = ({movies, isAuthenticated}) => {

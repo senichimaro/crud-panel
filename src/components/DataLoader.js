@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
 
+import { useUserID } from '../services/services';
+
 export const DataLoader = ({ getF = ()=>{}, resourceName, children }) => {
     const [state, setState] = useState({})
-    const { isAuthenticated } = useAuth0();
+    const { isAuthenticated, user } = useAuth0();
+    useUserID(user)
+    if (isAuthenticated) console.log("user", user)
+
 
     useEffect(() => {
         (async () => {
