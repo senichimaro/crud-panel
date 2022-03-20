@@ -7,8 +7,6 @@ export const DataLoader = ({ getF = ()=>{}, resourceName, children }) => {
     const [state, setState] = useState({})
     const { isAuthenticated, user } = useAuth0();
     useUserID(user)
-    if (isAuthenticated) console.log("user", user)
-
 
     useEffect(() => {
         (async () => {
